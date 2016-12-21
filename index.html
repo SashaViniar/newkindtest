@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+
+<body class="container">
+    <script>
+        var app = angular.module("List", []);
+        app.controller("myCtrl", function($scope) {
+            $scope.department = ["D1", "D2", "D3"];
+
+            $scope.firstname = [];
+            $scope.secondname = [];
+            $scope.age = [];
+            $scope.city = ['Lviv', 'Odesa'];
+            
+
+            $scope.addItem = function(a) {
+                if (a == 1) {
+                    $scope.errortext = "";
+                    if (!$scope.addMeD) {
+                        return;
+                    }
+                    if ($scope.department.indexOf($scope.addMeD) == -1) {
+                        $scope.department.push($scope.addMeD);
+                        
+                    }
+                    else {
+                        $scope.errortext = "The item is already in your shopping list.";
+                    }
+                }
+                if (a == 2) {
+                    $scope.errortext = "";
+                    if (!$scope.addMeF && !$scope.addMeS) {
+                        return;
+                    }
+                    if (($scope.firstname.indexOf($scope.addMeF)) == -1 && ($scope.secondname.indexOf($scope.addMeS) == -1)) {
+                        $scope.firstname.push($scope.addMeF);
+                        $scope.secondname.push($scope.addMeS);
+                        $scope.age.push($scope.addMeA);
+                        $scope.city.push($scope.addMeA);
+                        
+                    }
+                }
+            }
+            $scope.removeItem = function(x, a) {
+                if (a == 1) {
+                    $scope.errortext = "";
+                    $scope.department.splice(x, 1);
+                }
+                else {
+                    $scope.firstname.splice(x, 1);
+                    $scope.secondname.splice(x, 1);
+                    $scope.age.splice(x, 1);
+                }
+
+            }
+        });
+    </script>
+    <div class="col-md-12">
+        <div class="col-md-3">
+            <div class="simple-nav">
+                <button id="btnAddDepartment" class="btn btn-danger">Add Department</button>
+                <button id="btnAddEmp" class="btn btn-danger">Add Employee</button>
+                <button id="btnListDepartment" class="btn btn-danger">List Department</button>
+                <button id="btnListEmp" class="btn btn-danger">List Employee</button>
+            </div>
+        </div>
+        <div ng-app="List" class="col-md-9" ng-controller="myCtrl">
+            <div class="AddDep col-md-12">
+                <div class="centerAddDep">
+                    <h5 style="margin:3%;">Please enter new Department</h5>
+                    <input placeholder="Name Department" class="form-control" ng-model="addMeD">
+                </div>
+                <div class="btnAddDepartmentInput">
+                    <button class="btn btn-danger" ng-click="addItem(1)">Add</button>
+                </div>
+            </div>
+            <div class="AddEmp col-md-12">
+                <div class="col-md-6">
+                    <input placeholder="First Name" ng-model="addMeF" class="form-control">
+                    <input placeholder="Second Name" ng-model="addMeS" class="form-control">
+                    <input type="number" placeholder="Age" ng-model="addMeA" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control">
+                        <option ng-repeat="x in city">{{x}}</option>
+                     </select>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="radio" name="gender" value="male" /> Male
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="gender" value="female" /> Female
+                        </label>
+                    </div>
+                    <select class="form-control">
+                        <option ng-repeat="x in department">{{x}}</option>
+                     </select>
+                    <div>
+                        <button class="btn btn-danger marginM" ng-click="addItem(2)">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="SeeDep col-md-12">
+                <ul>
+                    <li class ="list-group-item list-group-item-info textcenter" >List Department</li>
+                    <li class="list-group-item list-group-item-danger textcenter" ng-repeat="x in department">{{x}}<span style = "float:right;" ng-click="removeItem($index,1)" style="cursor:pointer;">×</span></li>
+                </ul>
+            </div>
+            <div class="SeeEmp col-md-12">
+                <ul class="col-md-4">
+                    <li class ="list-group-item list-group-item-info textcenter" >First Name</li>
+                    <li class="list-group-item list-group-item-danger" ng-repeat="x in firstname">{{x}}</li>
+                </ul>
+                <ul class="col-md-4">
+                    <li class ="list-group-item list-group-item-info textcenter" >Second Name</li>
+                    <li class="list-group-item list-group-item-danger" ng-repeat="x in secondname">{{x}}</li>
+                </ul>
+                <ul class="col-md-4">
+                    <li class ="list-group-item list-group-item-info textcenter" >Fired</li>
+                    <li class="list-group-item list-group-item-danger textcenter" ng-repeat="x in firstname"><span ng-click="removeItem($index,2)" style="cursor:pointer;">×</span></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/js.js"></script>
+</body>
+
+</html>
